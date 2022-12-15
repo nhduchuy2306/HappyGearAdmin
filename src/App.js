@@ -1,3 +1,4 @@
+import  ProductGrid  from './components/Product/ProductGrid'
 import React, { useState } from "react";
 import {
   TableOutlined
@@ -100,7 +101,9 @@ const App = () => {
               background: colorBgContainer,
             }}
           >
-            Bill is a cat.
+            
+            <ProductGrid />
+            
           </div>
         </Content>
         <Footer
