@@ -1,3 +1,5 @@
+import ProductPicture from './ProductPicture'
+
 import React from 'react';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
@@ -12,10 +14,7 @@ function ProductItem({product}) {
                 width: 300,
             }}
             cover={
-                <img
-                    alt="example"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
+                <ProductPicture id = {product.productId}/>
             }
             actions={[
                 <SettingOutlined key="setting" />,
