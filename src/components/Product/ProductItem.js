@@ -1,32 +1,48 @@
 import ProductPicture from './ProductPicture'
-
-import React from 'react';
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Card } from 'antd';
+import React, { useEffect } from 'react';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Card, Badge } from 'antd';
 const { Meta } = Card;
 
-function ProductItem({product}) {
+function ProductItem({ product, setIsModalEditOpen, setIsModalDeleteOpen, setProductData }) {
 
-    console.log(product)
+
+    useEffect(()=>{
+
+    },[product])
+
+    function handleEdit() {
+        setIsModalEditOpen(true)
+        setProductData(product)
+    }
+
+    function handleDelete() {
+        setIsModalDeleteOpen(true)
+        setProductData(product)
+    }
+
+
     return (
-        <Card
-            style={{
-                width: 300,
-            }}
-            cover={
-                <ProductPicture id = {product.productId}/>
-            }
-            actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-            ]}
-        >
-            <Meta
-                title= {product.productName}
-                description={product.price +"đ"}
-            />
-        </Card>
+        <Badge.Ribbon placement="start" text={product.status ? 'Available' : 'Expire'} color={product.status ? 'blue' : 'red'}>
+            <Card
+                style={{
+                    width: 300,
+                }}
+                cover={
+                    <ProductPicture id={product.productId} />
+                }
+                actions={[
+                    <EditOutlined key="edit" onClick={handleEdit} />,
+                    product.status ? <DeleteOutlined key="delete" onClick={handleDelete} /> : '...'
+                ]}
+            >
+                <Meta
+                    title={product.productName}
+                    description={product.price + "đ"}
+                />
+
+            </Card>
+        </Badge.Ribbon>
     )
 }
 export default ProductItem;

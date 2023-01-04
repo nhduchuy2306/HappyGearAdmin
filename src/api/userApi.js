@@ -1,38 +1,38 @@
 import axiosClient from "./axiosClient";
 
-const productApi = {
+const userApi = {
     getAll(params) {
-        const url = '/products'
+        const url = '/users'
         return axiosClient.get(url, { params })
     },
-    get(id) {
-        const url = `/products/${id}`
+    get(userName) {
+        const url = `/users/${userName}`
         return axiosClient.get(url);
     },
     add(data) {
-        const url = '/products/create'
+        const url = '/users/create'
         return axiosClient.post(url, data);
     },
     update(data) {
-        const url = `/products/update/${data.productId}`
+        const url = `/users/update/${data.userName}`
         return axiosClient.put(url, data);
     },
-    remove(id) {
-        const url = `/products/delete/${id}`
+    remove(userName) {
+        const url = `/users/delete/${userName}`
         return axiosClient.delete(url);
     },
     getAllByPage(params) {
-        const url = '/products/'
+        const url = '/users/'
         return axiosClient.get(url, { params })
     },
     getTotal() {
-        const url = '/products/total'
+        const url = '/users/total'
         return axiosClient.get(url)
     },
     getByPageAndName(params) {
-        const url = '/products/name'
+        const url = '/users/name'
         return axiosClient.get(url, { params })
     }
 };
 
-export default productApi;
+export default userApi;

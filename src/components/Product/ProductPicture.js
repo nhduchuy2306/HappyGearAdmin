@@ -1,20 +1,35 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import pictureApi from "../../api/pictureApi"
+import img from "../../source/errorImg.jpg"
 
-function ProductPicture({id}) {
+function ProductPicture({ id }) {
 
-    const [picture , setPicture] = useState()
+    const [picture, setPicture] = useState(img)
 
-    useEffect(() =>{
-        pictureApi.getByProductId(id)
-            .then(res => setPicture(res.data))
-    },[])
+    useEffect(() => {
+        async function fetchImage(){
+            try{
+                const response = await  pictureApi.getByProductId(id);
+                setPicture(response.data.pictureUrl)
 
-    console.log(picture)
+            } catch (e){
+                console.log(e.message)
+                setPicture(img)
+            }
+        }
+        fetchImage();
+        
+        // pictureApi.getByProductId(id)
+        //     .then(res => setPicture(res.data))
+    }, [id])
+
+
     return (
         <img
             alt="example"
-            src={picture?.pictureUrl}
+            src={picture}
+            loading="lazy"
+
         />
     )
 }
