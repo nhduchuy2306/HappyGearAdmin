@@ -1,23 +1,42 @@
 import axios from "axios";
+import storageService from "./storage";
+
+let token;
 
 const axiosClient = axios.create({
   baseURL: "http://localhost:8080/happygear/api/",
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
+
 });
 
-// Add a request interceptor
-axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
+// // Add a request interceptor
+// axios.interceptors.request.use(
+//   function (config) {
+//     // Do something before request is sent
+//     return config;
+//   },
+//   function (error) {
+//     // Do something with request error
+//     return Promise.reject(error);
+//   }
+// );
+
+axiosClient.interceptors.request.use(async (currentConfig) => {
+  const customHeaders = {};
+
+  const accessToken = storageService.getAccessToken();
+  if (accessToken) {
+    customHeaders['Authorization'] = 'Bearer ' + accessToken;
   }
-);
+
+  return {
+    ...currentConfig,
+    headers: {
+      ...customHeaders, // Attach token
+      ...currentConfig.headers, // The remain data
+    },
+  };
+});
+
 
 // Add a response interceptor
 axios.interceptors.response.use(

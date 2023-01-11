@@ -6,7 +6,7 @@ const SearchProvider = ({ children }) => {
 
     const [searchId, setSearchId] = useState('');
     const [searchName, setSearchName] = useState('');
-    const [searchUserName, setSearchUserName] = useState('');
+    const [searchUsername, setSearchUsername] = useState('');
     const [searchFullName, setSearchFullName] = useState('');
     const [searchPhoneNumber, setSearchPhoneNumber] = useState('');
 
@@ -15,8 +15,8 @@ const SearchProvider = ({ children }) => {
         setSearchId,
         searchName,
         setSearchName,
-        searchUserName,
-        setSearchUserName,
+        searchUsername,
+        setSearchUsername,
         searchFullName,
         setSearchFullName,
         searchPhoneNumber,

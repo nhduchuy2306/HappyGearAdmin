@@ -21,7 +21,7 @@ const UserList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [userData, setUserData] = useState();
-    const [userName, setUserName] = useState();
+    const [username, setUsername] = useState();
 
     const loadMoreData = () => {
         if (loading) {
@@ -30,8 +30,8 @@ const UserList = () => {
         setLoading(true);
         setPage(page + 1);
 
-        if (searchContext.searchUserName !== '') {
-            userApi.get(searchContext.searchUserName)
+        if (searchContext.searchUsername !== '') {
+            userApi.get(searchContext.searchUsername)
                 .then(res => res.data)
                 .then(data => {
                     setList([data]);
@@ -61,22 +61,22 @@ const UserList = () => {
     useEffect(() => {
         setList([]);
         loadMoreData();
-    }, [searchContext.searchUserName]);
+    }, [searchContext.searchUsername]);
 
     const handleEdit = (item) => {
         setUserData(item);
         setIsModalOpen(true);
     }
 
-    const handleDelete = (userName) => {
-        setUserName(userName);
+    const handleDelete = (username) => {
+        setUsername(username);
         setIsDeleteModalOpen(true);
     }
 
 
     return (
         <>
-            <DeleteUserModal list={list} setList={setList} userName={userName} isModalOpen={isDeleteModalOpen} setIsModalOpen={setIsDeleteModalOpen} />
+            <DeleteUserModal list={list} setList={setList} username={username} isModalOpen={isDeleteModalOpen} setIsModalOpen={setIsDeleteModalOpen} />
             <EditUserModal list={list} setList={setList} user={userData} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
             <div
                 id="scrollableDiv"
@@ -110,18 +110,18 @@ const UserList = () => {
                         dataSource={list}
                         renderItem={(item) => (
                             <List.Item
-                                key={item.userName}
+                                key={item.username}
                                 actions={[
                                     <Button type="link" onClick={() => {
                                         handleEdit(item);
                                     }}>Edit</Button>,
-                                    <Button type="link" style={{ color: 'red' }} onClick={() => { handleDelete(item.userName) }}>Delete</Button>
+                                    <Button type="link" style={{ color: 'red' }} onClick={() => { handleDelete(item.username) }}>Delete</Button>
                                 ]}
                             >
                                 {item.status ? <SmileOutlined style={{ color: 'green' }} /> : <FrownOutlined style={{ color: 'red' }} />}
                                 <List.Item.Meta
                                     avatar={<Avatar size={60} src={`https://avatars.dicebear.com/api/avataaars/${Math.random()}.svg`} />}
-                                    title={item.userName}
+                                    title={item.username}
                                     description={item.email}
                                 />
                             </List.Item>

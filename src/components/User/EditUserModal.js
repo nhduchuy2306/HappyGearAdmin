@@ -15,12 +15,12 @@ const EditUserModal = ({ list, setList, user, isModalOpen, setIsModalOpen }) => 
     const handleOk = (values) => {
         userApi.update(values);
 
-        let index = list.findIndex((obj => obj.userName === values.userName));
+        let index = list.findIndex((obj => obj.username === values.username));
         list[index] = values;
         setList(list);
 
         setIsModalOpen(false);
-        openNotificationWithIcon('Update Successfully!!!', `UserName: ${user.userName} have been updated.`);
+        openNotificationWithIcon('Update Successfully!!!', `Username: ${user.username} have been updated.`);
     }
 
     const handleCancel = () => {
@@ -55,7 +55,7 @@ const EditUserModal = ({ list, setList, user, isModalOpen, setIsModalOpen }) => 
                 }}
                 initialValues={{
                     remember: true,
-                    userName: user?.userName,
+                    username: user?.username,
                     fullName: user?.fullName,
                     address: user?.address,
                     password: user?.password,
@@ -70,7 +70,7 @@ const EditUserModal = ({ list, setList, user, isModalOpen, setIsModalOpen }) => 
             >
                 <Form.Item
                     label="User Name"
-                    name="userName"
+                    name="username"
                 >
                     <Input
                         disabled

@@ -3,7 +3,7 @@ import userApi from '../../api/userApi';
 import { NotificationContext } from '../Context/NotificationProvider';
 import { Modal } from 'antd';
 
-const DeleteUserModal = ({ list, setList, isModalOpen, setIsModalOpen, userName }) => {
+const DeleteUserModal = ({ list, setList, isModalOpen, setIsModalOpen, username }) => {
 
     const openNotificationWithIcon = useContext(NotificationContext)
 
@@ -13,15 +13,15 @@ const DeleteUserModal = ({ list, setList, isModalOpen, setIsModalOpen, userName 
     const handleOk = () => {
         setConfirmLoading(true);
         setTimeout(() => {
-            userApi.remove(userName);
+            userApi.remove(username);
 
-            let index = list.findIndex((obj => obj.userName === userName));
+            let index = list.findIndex((obj => obj.username === username));
             list[index].status = false;
             setList(list);
 
             setConfirmLoading(false);
             setIsModalOpen(false);
-            openNotificationWithIcon('Delete Successfully!!!', ` ${userName} have been deleted.`);
+            openNotificationWithIcon('Delete Successfully!!!', ` ${username} have been deleted.`);
         }, 2000);
     };
 
@@ -40,7 +40,7 @@ const DeleteUserModal = ({ list, setList, isModalOpen, setIsModalOpen, userName 
                 onCancel={handleCancel}
                 destroyOnClose
             >
-                <p>{`Do you want to delete User : ${userName ? userName : ''}`}</p>
+                <p>{`Do you want to delete User : ${username ? username : ''}`}</p>
             </Modal>
         </>
     );

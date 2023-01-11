@@ -1,14 +1,17 @@
 
-import React, {  useState } from "react";
+import React, {  useContext, useState } from "react";
 import {
   TableOutlined
 } from "@ant-design/icons";
 import {  Layout, Menu, theme, Button } from "antd";
 import { useNavigate, Route, Routes  } from "react-router-dom";
-
+import { LoginContext } from './components/Context/LoginProvider'
+ 
 import ProductPage from './components/Page/ProductPage';
 import UserPage from "./components/Page/UserPage";
 import OtherPage from "./components/Page/OtherPage";
+import LoginPage from "./components/Page/LoginPage";
+import storageService from "./api/storage";
 // import SearchBar from "./components/SearchBar/SearchBar";
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -28,12 +31,18 @@ const items = [
 ];
 const App = () => {
 
+  const {isLogin, setIsLogin} = useContext(LoginContext);
+
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate()
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const handleLogout = () => {
+    setIsLogin(false);
+    storageService.removeAccessToken();
+  }
 
   return (
     <Layout
@@ -78,7 +87,7 @@ const App = () => {
             alignItems: "center"
           }}
         >
-          <Button>Logout</Button>
+          {!isLogin || <Button onClick={handleLogout}>Logout</Button>}
         </Header>
         <Content
           style={{
@@ -86,11 +95,18 @@ const App = () => {
           }}
         >
 
-          <Routes>
+          {isLogin || <LoginPage />}
+          {!isLogin || <Routes>
             <Route path="/products" element={<ProductPage />}/>
             <Route path="/users" element={<UserPage />}/>
             <Route path="/others" element={<OtherPage/>} />
-          </Routes>
+          </Routes>}
+          
+          {/* <Routes>
+            <Route path="/products" element={<ProductPage />}/>
+            <Route path="/users" element={<UserPage />}/>
+            <Route path="/others" element={<OtherPage/>} />
+          </Routes> */}
         
 
         </Content>
